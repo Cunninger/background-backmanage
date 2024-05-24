@@ -1,0 +1,53 @@
+package cn.yam.backmanage.controller;
+
+import cn.yam.backmanage.entity.Response.UserResponse;
+import cn.yam.backmanage.entity.pojo.User;
+import cn.yam.backmanage.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 功能：
+ * 日期：2024/5/24 上午8:29
+ */
+@RestController("/api")
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/login")
+    ResponseEntity<Map<String, Integer>>  login(@RequestBody User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        Map<String, Integer> response = new HashMap<>();
+        response.put("code", 200);
+        userService.login(username, password);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/register")
+    ResponseEntity<Map<String, Integer>> register(@RequestBody User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        Map<String, Integer> response = new HashMap<>();
+        userService.register(username, password);
+        response.put("code", 200);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/users")
+    public UserResponse fetchUsers(@RequestParam(defaultValue = "") String search,
+                                   @RequestParam(defaultValue = "1") int page,
+                                   @RequestParam(defaultValue = "10") int pageSize) {
+        return userService.findUsers(search, page, pageSize);
+    }
+
+
+
+}
