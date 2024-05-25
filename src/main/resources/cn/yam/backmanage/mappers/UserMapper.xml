@@ -20,6 +20,15 @@
         INSERT INTO User (user_id,username, password)
         VALUES (#{userId},#{username}, #{password})
     </insert>
+    <update id="update">
+        UPDATE User
+        SET username = #{username}
+        , password = #{password}
+        WHERE user_id = #{userId}
+    </update>
+    <delete id="deleteUser">
+        DELETE FROM User WHERE user_id = #{userId}
+    </delete>
 
 
     <select id="selectByUsername" resultMap="base_result_map">
@@ -27,5 +36,11 @@
         <include refid="base_column_list"/>
         FROM User
         WHERE username = #{username}
+    </select>
+    <select id="selectByUserId" resultType="cn.yam.backmanage.entity.pojo.User">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM User
+        WHERE user_id = #{userId}
     </select>
 </mapper>

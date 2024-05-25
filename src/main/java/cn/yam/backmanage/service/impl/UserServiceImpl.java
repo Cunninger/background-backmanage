@@ -60,4 +60,37 @@ public class UserServiceImpl implements UserService {
         int total = userMapper.countUsers(search);
         return new UserResponse(users, total);
     }
+
+    @Override
+    public void deleteUser(int userId) {
+        User user = userMapper.selectByUserId(String.valueOf(userId));
+        if (user == null) {
+            throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
+        }
+        userMapper.deleteUser(userId);
+    }
+
+    @Override
+    public void updateUser(int userId, User user) {
+        User userTemp = userMapper.selectByUserId(String.valueOf(userId));
+        if (userTemp == null) {
+            throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
+        }
+        userTemp.setUsername(user.getUsername());
+        userTemp.setPassword(user.getPassword());
+        userMapper.update(userTemp);
+    }
+
+    @Override
+    public void createUser(User user) {
+        User userTemp = userMapper.selectByUserId(user.getUserId());
+        if (userTemp != null) {
+          // 已经存在用户，调用修改用户信息接口
+            updateUser(Integer.parseInt(userTemp.getUserId()), userTemp);
+        }
+        else {
+            userMapper.insert(user);
+        }
+
+    }
 }

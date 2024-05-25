@@ -48,6 +48,42 @@ public class UserController {
         return userService.findUsers(search, page, pageSize);
     }
 
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Map<String, Integer>> deleteUser(@PathVariable int userId) {
+        userService.deleteUser(userId);
+        Map<String, Integer> response = new HashMap<>();
+        response.put("code", 200);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<Map<String, Integer>> updateUser(@PathVariable String userId,@RequestBody User user) {
+        userService.updateUser(Integer.parseInt(userId), user);
+        Map<String, Integer> response = new HashMap<>();
+        response.put("code", 200);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 创建用户
+     * @param user
+     * @return
+     */
+    @PostMapping("/users")
+    public ResponseEntity<Map<String, Integer>> createUser(@RequestBody User user) {
+        userService.createUser(user);
+        Map<String, Integer> response = new HashMap<>();
+        response.put("code", 200);
+        return ResponseEntity.ok(response);
+    }
+
+
+
 
 
 }

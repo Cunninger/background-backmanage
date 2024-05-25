@@ -18,4 +18,10 @@ public interface UserMapper {
 
     @Select("SELECT COUNT(*) FROM user WHERE username LIKE CONCAT('%', #{search}, '%')")
     int countUsers(@Param("search") String search);
+
+    void deleteUser(int userId);
+
+    User selectByUserId(String s);
+
+    void update(User userTemp);
 }
