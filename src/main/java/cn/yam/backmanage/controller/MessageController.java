@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * 功能：
  * 日期：2024/5/25 下午5:44
  */
-@RestController("/savechatapi")
+@RestController
 public class MessageController {
 
     @Autowired

@@ -15,7 +15,7 @@ import java.util.Map;
  * 功能：
  * 日期：2024/5/24 上午8:29
  */
-@RestController("/api")
+@RestController
 public class UserController {
 
     @Autowired
