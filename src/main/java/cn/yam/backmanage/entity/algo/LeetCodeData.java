@@ -9,8 +9,6 @@ import lombok.Setter;
  * 功能：
  * 日期：2024/4/14 下午3:54
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class LeetCodeData {
