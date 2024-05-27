@@ -19,7 +19,7 @@ import java.util.Collections;
  * 功能：
  * 日期：2024/5/25 下午4:05
  */
-@RestController("/chatapi")
+@RestController
 public class ChatController {
 
     @Value("${ollama.api.url}")
