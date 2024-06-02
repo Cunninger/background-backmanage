@@ -1,3 +1,7 @@
+- 2024--6-03 集成Openwebui
+![image](https://github.com/Cunninger/background-backmanage/assets/113076850/ad007e50-a891-43fb-af01-4ff6bbb3c634)
+
+
 - 2024--6-02 群聊
 ![image](https://github.com/Cunninger/background-backmanage/assets/113076850/2655d302-98ee-4c53-b96d-4508e45e9d11)
 
