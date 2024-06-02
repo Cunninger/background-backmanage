@@ -1,3 +1,26 @@
+-  `application.properities`如下,自行配置
+```java
+spring.application.name=backmanage
+spring.redis.database=10
+spring.redis.host=127.0.0.1
+spring.redis.port=6379
+spring.redis.password=1234
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=10MB
+server.port=7788
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/backmanage?useUnicode=true&characterEncoding=utf-8&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=1234
+mybatis.configuration.mapUnderscoreToCamelCase=true
+logging.level.org.springframework=INFO
+mybatis.mapper-locations=classpath:/mappers/*.xml
+ollama.api.url=
+ollama.api.token=
+draw.api.url=
+draw.api.token=
+
+```
+
 - 2024--6-03 集成Openwebui
 ![image](https://github.com/Cunninger/background-backmanage/assets/113076850/ad007e50-a891-43fb-af01-4ff6bbb3c634)
 
