@@ -110,13 +110,20 @@
             <version>5.8.18</version>
         </dependency>
 
-
-
         <dependency>
-            <groupId>top.jfunc.websocket</groupId>
-            <artifactId>websocket-springboot-starter</artifactId>
-            <version>1.8.2.4</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
         </dependency>
+
+
+
+
+        <!--        <dependency>-->
+<!--            <groupId>top.jfunc.websocket</groupId>-->
+<!--            <artifactId>websocket-springboot-starter</artifactId>-->
+<!--            <version>1.8.2.4</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 

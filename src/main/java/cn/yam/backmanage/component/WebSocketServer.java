@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -72,6 +73,7 @@ public class WebSocketServer {
 
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("username") String username, @PathParam("room") String room) {
+
         log.info("服务端收到用户username={}的消息:{}", username, message);
         JSONObject obj = JSONUtil.parseObj(message);
         String toUsername = obj.getStr("to");
