@@ -1,3 +1,7 @@
+- 2024-06-03 补充AI图片存储和展示
+![image](https://github.com/Cunninger/background-backmanage/assets/113076850/94a35310-d357-438b-9ec0-904e2f7c6040)
+
+
 -  `application.properities`如下,自行配置
 ```java
 spring.application.name=backmanage
