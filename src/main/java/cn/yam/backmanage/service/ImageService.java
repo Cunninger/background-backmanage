@@ -55,11 +55,16 @@ public class ImageService {
         // Download image
         URL url = new URL(imageUrl);
         InputStream in = url.openStream();
-        Files.copy(in, Paths.get("downloaded_image.png"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        String fileName = "aicreated" + System.currentTimeMillis() + ".png";
+        String directory = "./file/aidrawpic/";
+        String fullPath = directory + fileName;
+
+// Download image
+        Files.copy(in, Paths.get(fullPath), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         in.close();
 
-        // Convert image to Base64
-        byte[] fileContent = Files.readAllBytes(Paths.get("downloaded_image.png"));
+// Convert image to Base64
+        byte[] fileContent = Files.readAllBytes(Paths.get(fullPath));
         return Base64.getEncoder().encodeToString(fileContent);
     }
 
