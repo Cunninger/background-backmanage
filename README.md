@@ -1,3 +1,6 @@
+- 2024-06-03 继续优化后端界面
+![image](https://github.com/Cunninger/background-backmanage/assets/113076850/5cc3e6dd-f2eb-4dd2-a345-cbc0e40449aa)
+
 - 2024-06-03 补充AI图片存储和展示
 ![image](https://github.com/Cunninger/background-backmanage/assets/113076850/94a35310-d357-438b-9ec0-904e2f7c6040)
 
