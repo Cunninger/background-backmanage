@@ -1,0 +1,39 @@
+draw:
+    api:
+        token: none
+        url: http://35.234.40.225:3000/v1/chat/completions
+logging:
+    level:
+        org:
+            springframework: INFO
+mybatis:
+    configuration:
+        mapUnderscoreToCamelCase: true
+    mapper-locations: classpath:/mappers/*.xml
+ollama:
+    api:
+        token: M3UqqyTBhMy85WwoZ_IMtz0XQsfoYLX_VJi0uZN5WMID
+        url: https://ollama.yamazing.cn/v1/chat/completions
+server:
+    port: 7788
+spring:
+    application:
+        name: backmanage
+    datasource:
+        password: 1234
+        url: jdbc:mysql://127.0.0.1:3306/backmanage?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+    redis:
+        database: 10
+        host: 127.0.0.1
+        password: 1234
+        port: 6379
+    servlet:
+        multipart:
+            max-file-size: 5MB
+            max-request-size: 10MB
+
+mybatis-plus:
+    global-config:
+        db-config:
+            id-type: auto

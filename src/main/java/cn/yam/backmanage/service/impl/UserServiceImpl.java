@@ -6,6 +6,9 @@ import cn.yam.backmanage.entity.pojo.User;
 import cn.yam.backmanage.exception.UserException;
 import cn.yam.backmanage.mappers.UserMapper;
 import cn.yam.backmanage.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,77 +23,77 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public void login(String username, String password) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();// 查询条件构造器
+        queryWrapper.eq("username", username);         // 查询条件
 
-        // 用户名是否存在
-        User user = userMapper.selectByUsername(username);
+        User user = userMapper.selectOne(queryWrapper);       // 查询
         if (user == null) {
             throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
         }
-
-        // 密码是否正确
-        if (!user.getPassword().equals(password)) {
-            throw new UserException(ResponseCodeEnum.PASSWORD_ERROR.getCode(), ResponseCodeEnum.PASSWORD_ERROR.getMessage());
-        }
-
-
     }
 
     @Override
     public void register(String username, String password) {
-        // 校验用户名是否存在
-        User user = userMapper.selectByUsername(username);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();// 查询条件构造器
+        queryWrapper.eq("username", username);         // 查询条件
+
+        User user = userMapper.selectOne(queryWrapper);       // 查询
         if (user != null) {
             throw new UserException(ResponseCodeEnum.USER_EXIST.getCode(), ResponseCodeEnum.USER_EXIST.getMessage());
+
         }
-        User userTemp = new User();
-        userTemp.setUsername(username);
-        userTemp.setPassword(password);
-        userMapper.insert(userTemp);
-
-
     }
 
     @Override
-
-    public UserResponse findUsers(String search, int page, int pageSize) {
-        int offset = (page - 1) * pageSize;
-        List<User> users = userMapper.findUsers(search, offset, pageSize);
-        int total = userMapper.countUsers(search);
-        return new UserResponse(users, total);
-    }
-
-    @Override
-    public void deleteUser(int userId) {
-        User user = userMapper.selectByUserId(String.valueOf(userId));
+    public void deleteUser(Integer userId) {
+        User user = userMapper.selectById(userId);
         if (user == null) {
             throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
         }
-        userMapper.deleteUser(userId);
+        userMapper.deleteById(userId);
     }
 
     @Override
-    public void updateUser(int userId, User user) {
-        User userTemp = userMapper.selectByUserId(String.valueOf(userId));
+    public IPage<User> getUsers(Page<User> userPage, String search) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        if (search != null && !search.isEmpty()) {
+            queryWrapper.lambda().like(User::getUsername, search);
+        }
+        return userMapper.selectPage(userPage, queryWrapper);
+    }
+
+
+    @Override
+    public void updateUser(Integer userId, User user) {
+        User userTemp = userMapper.selectById(userId);
         if (userTemp == null) {
             throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
         }
         userTemp.setUsername(user.getUsername());
         userTemp.setPassword(user.getPassword());
-        userMapper.update(userTemp);
+        userMapper.updateById(userTemp);
     }
+
+    /**
+     * 创建用户 如果用户存在则更新用户信息
+     *
+     * @param user
+     */
 
     @Override
     public void createUser(User user) {
-        User userTemp = userMapper.selectByUserId(user.getUserId());
+        User userTemp = userMapper.selectById(user.getUserId());
         if (userTemp != null) {
-          // 已经存在用户，调用修改用户信息接口
-            updateUser(Integer.parseInt(userTemp.getUserId()), userTemp);
-        }
-        else {
+            updateUser(userTemp.getUserId(), userTemp);
+        } else {
+
             userMapper.insert(user);
         }
-
     }
+
+
 }
+
