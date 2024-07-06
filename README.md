@@ -1,3 +1,8 @@
+- 2024-07-06 集成代码编辑器，实现代码运行
+
+![image](https://github.com/Cunninger/background-backmanage/assets/113076850/db16757a-cf46-4a3a-a1e1-504910e84a66)
+
+
 - 2024-06-03 继续优化后端界面
 ![image](https://github.com/Cunninger/background-backmanage/assets/113076850/5cc3e6dd-f2eb-4dd2-a345-cbc0e40449aa)
 
