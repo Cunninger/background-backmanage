@@ -17,9 +17,10 @@ import lombok.NoArgsConstructor;
 @TableName("user") // 指定表名，如果表名与类名一致可以省略
 public class User {
     @TableId // 指定主键
-    private Integer userId =null;
+    private Integer userId = null;
     private String username;
     private String password;
+    private String role;
 
 
 }

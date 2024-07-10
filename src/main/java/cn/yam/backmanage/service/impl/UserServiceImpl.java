@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
         }
+
     }
 
     @Override
@@ -63,6 +64,13 @@ public class UserServiceImpl implements UserService {
             queryWrapper.lambda().like(User::getUsername, search);
         }
         return userMapper.selectPage(userPage, queryWrapper);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return userMapper.selectOne(queryWrapper);
     }
 
 

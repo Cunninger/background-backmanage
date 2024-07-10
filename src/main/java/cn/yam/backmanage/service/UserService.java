@@ -19,4 +19,6 @@ public interface UserService {
     void createUser(User user);
 
     IPage<User> getUsers(Page<User> userPage, String search);
+
+    User findUserByUsername(String username);
 }

@@ -5,13 +5,12 @@ import cn.yam.backmanage.utils.ReflectionUtils;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 功能：
@@ -19,12 +18,17 @@ import java.nio.charset.StandardCharsets;
  */
 @RestController
 public class CodeEditorController {
+    // 定义一个正则表达式来匹配 ANSI 转义字符
+    private static final Pattern ansiPattern = Pattern.compile("\\u001b\\[[0-9;]*m");
 
     @PostMapping("/codeeditor")
     public ResponseEntity<?> executeCode(@RequestBody CodeRequest codeRequest) {
         try {
             System.out.println("执行代码: " + codeRequest.getCode());
             String executionResult = executeUserCode(codeRequest.getCode(), codeRequest.getType(), codeRequest.getStdin());
+            ResponseEntity<String> oked = ResponseEntity.ok(executionResult);
+
+            System.out.println(ResponseEntity.ok(executionResult));
             return ResponseEntity.ok(executionResult);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("代码执行出错: " + e.getMessage());
@@ -32,12 +36,11 @@ public class CodeEditorController {
     }
 
     private String executeUserCode(String code, String type, String stdin) throws UnsupportedEncodingException {
-        // 写一个方法映射type
         type = ReflectionUtils.mapType(type);
 
         // URL编码code
         String encodedCode = code.replace("\n", "%0A").replace(" ", "%20").replace("{", "%7B").replace("}", "%7D")
-                .replace("\"", "%22").replace("\t","");
+                .replace("\"", "%22").replace("\t", "");
         System.out.println(encodedCode);
         // 去除encodedCode中的空格，合并成一行
 
@@ -62,17 +65,23 @@ public class CodeEditorController {
         headers.add("sec-fetch-site", "same-site");
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0");
 
-        // 创建HttpEntity
         HttpEntity<String> entity = new HttpEntity<>(requestData, headers);
-
-        // 创建RestTemplate实例
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://rapi.xjq.icu/code/run";
 
-        // 调用外部服务
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
 
-        // 返回外部服务响应内容
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        System.out.println(response.getBody());
         return response.getBody();
+
+    }
+
+    public static String stripAnsi(String input) {
+        if (input == null) {
+            return null;
+        }
+        // 使用正则表达式替换 ANSI 转义字符
+        Matcher matcher = ansiPattern.matcher(input);
+        return matcher.replaceAll("");
     }
 }

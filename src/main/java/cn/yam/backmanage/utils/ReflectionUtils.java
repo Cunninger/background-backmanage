@@ -16,11 +16,12 @@ public class ReflectionUtils {
     private static final Map<String, String> typeMap = new HashMap<>();
 
     static {
-        typeMap.put("x-javascript", "javascript");
+
+        typeMap.put("javascript", "typescript");
         typeMap.put("x-java", "java");
         typeMap.put("x-c++src", "cpp");
         typeMap.put("x-c", "c");
-        typeMap.put("x-python", "python");
+        typeMap.put("x-python", "python3");
         typeMap.put("x-sql", "sql");
         typeMap.put("x-shell", "shell");
         typeMap.put("x-powershell", "powershell");

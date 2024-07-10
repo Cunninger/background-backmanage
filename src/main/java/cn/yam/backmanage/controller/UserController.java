@@ -23,16 +23,36 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //    @PostMapping("/login")
+//    ResponseEntity<Map<String, Integer>> login(@RequestBody User user) {
+//        String username = user.getUsername();
+//        String password = user.getPassword();
+//        Map<String, Integer> response = new HashMap<>();
+//        response.put("code", 200);
+//        userService.login(username, password);
+//        System.out.println(ResponseEntity.ok(response));
+//        // 单独查找一个username为username的用户
+//        User user1 = userService.findUserByUsername(username);
+//        return ResponseEntity.ok(response);
+//
+//    }
     @PostMapping("/login")
-    ResponseEntity<Map<String, Integer>>  login(@RequestBody User user) {
+    ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
-        Map<String, Integer> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
         response.put("code", 200);
+
         userService.login(username, password);
+        System.out.println(ResponseEntity.ok(response));
+        User userTemp = userService.findUserByUsername(username);
+        response.put("user", userTemp);
+        System.out.println(ResponseEntity.ok(response));
         return ResponseEntity.ok(response);
+
     }
-//
+
+
     @PostMapping("/register")
     ResponseEntity<Map<String, Integer>> register(@RequestBody User user) {
         String username = user.getUsername();
@@ -43,12 +63,15 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping("/users")
-//    public UserResponse fetchUsers(@RequestParam(defaultValue = "") String search,
-//                                   @RequestParam(defaultValue = "1") int page,
-//                                   @RequestParam(defaultValue = "10") int pageSize) {
-//        return userService.findUsers(search, page, pageSize);
-//    }
+    /**
+     * 获取用户列表
+     *
+     * @param search
+     * @param page
+     * @param size
+     * @return
+     */
+
 
     @GetMapping("/users")
     public ResponseEntity<?> getUsers(
@@ -73,11 +96,12 @@ public class UserController {
 
     /**
      * 更新用户信息
+     *
      * @param user
      * @return
      */
     @PutMapping("/users/{userId}")
-    public ResponseEntity<Map<String, Integer>> updateUser(@PathVariable Integer userId,@RequestBody User user) {
+    public ResponseEntity<Map<String, Integer>> updateUser(@PathVariable Integer userId, @RequestBody User user) {
         userService.updateUser(userId, user);
         Map<String, Integer> response = new HashMap<>();
         response.put("code", 200);
@@ -86,6 +110,7 @@ public class UserController {
 
     /**
      * 创建用户
+     *
      * @param user
      * @return
      */
@@ -97,8 +122,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-
-
+//    public ResponseEntity<?> getUserInfo()
 
 
 }
