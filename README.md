@@ -1,3 +1,4 @@
+- 2024-07-10 增加前端鉴权
 - 2024-07-06 集成代码编辑器，实现代码运行
 - 单独抽离代码编辑器
 - 前端地址：https://github.com/Cunninger/codeEditor-singlePage-fronted
