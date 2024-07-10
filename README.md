@@ -1,8 +1,9 @@
+- 2024-07-10 增加前端鉴权
 - 2024-07-06 集成代码编辑器，实现代码运行
-- 单独抽离代码编辑器
-- 前端地址：https://github.com/Cunninger/codeEditor-singlePage-fronted
-- 后端地址：https://github.com/Cunninger/codeEditor-singlePage-background (py实现)
-![image](https://github.com/Cunninger/background-backmanage/assets/113076850/db16757a-cf46-4a3a-a1e1-504910e84a66)
+  - 单独抽离代码编辑器
+  - 前端地址：https://github.com/Cunninger/codeEditor-singlePage-fronted
+  - 后端地址：https://github.com/Cunninger/codeEditor-singlePage-background (py实现)
+  ![image](https://github.com/Cunninger/background-backmanage/assets/113076850/db16757a-cf46-4a3a-a1e1-504910e84a66)
 
 
 - 2024-06-03 继续优化后端界面
