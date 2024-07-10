@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 功能：
  * 日期：2024/5/24 上午8:30
@@ -21,6 +23,10 @@ public class User {
     private String username;
     private String password;
     private String role;
+    private Integer status;
+    private Date createTime;
+    private Date lastLoginTime;
+    private Date updateTime;
 
 
 }

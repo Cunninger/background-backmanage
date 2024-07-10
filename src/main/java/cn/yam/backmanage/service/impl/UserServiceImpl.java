@@ -1,5 +1,6 @@
 package cn.yam.backmanage.service.impl;
 
+import cn.yam.backmanage.entity.Response.ImportUsers;
 import cn.yam.backmanage.entity.Response.UserResponse;
 import cn.yam.backmanage.entity.enums.ResponseCodeEnum;
 import cn.yam.backmanage.entity.pojo.User;
@@ -24,6 +25,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 登录
+     *
+     * @param username
+     * @param password
+     */
+
     @Override
     public void login(String username, String password) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();// 查询条件构造器
@@ -35,6 +43,13 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    /**
+     * 注册用户
+     *
+     * @param username
+     * @param password
+     */
 
     @Override
     public void register(String username, String password) {
@@ -48,6 +63,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 删除用户
+     *
+     * @param userId
+     */
+
     @Override
     public void deleteUser(Integer userId) {
         User user = userMapper.selectById(userId);
@@ -56,6 +77,14 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.deleteById(userId);
     }
+
+    /**
+     * 获取用户列表
+     *
+     * @param userPage
+     * @param search
+     * @return
+     */
 
     @Override
     public IPage<User> getUsers(Page<User> userPage, String search) {
@@ -66,6 +95,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectPage(userPage, queryWrapper);
     }
 
+    /**
+     * 根据用户名查找用户
+     *
+     * @param username
+     * @return
+     */
+
     @Override
     public User findUserByUsername(String username) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -73,7 +109,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectOne(queryWrapper);
     }
 
+    @Override
+    public void importUsers(List<User> users) {
+        for (User user : users) {
+            createUser(user);
+        }
+    }
 
+    /**
+     * 更新用户信息
+     *
+     * @param userId
+     * @param user
+     */
     @Override
     public void updateUser(Integer userId, User user) {
         User userTemp = userMapper.selectById(userId);
@@ -82,6 +130,8 @@ public class UserServiceImpl implements UserService {
         }
         userTemp.setUsername(user.getUsername());
         userTemp.setPassword(user.getPassword());
+        userTemp.setRole(user.getRole());
+        userTemp.setStatus(user.getStatus());
         userMapper.updateById(userTemp);
     }
 

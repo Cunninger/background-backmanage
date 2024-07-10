@@ -1,9 +1,12 @@
 package cn.yam.backmanage.service;
 
+import cn.yam.backmanage.entity.Response.ImportUsers;
 import cn.yam.backmanage.entity.Response.UserResponse;
 import cn.yam.backmanage.entity.pojo.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.List;
 
 public interface UserService {
     void login(String username, String password);
@@ -21,4 +24,6 @@ public interface UserService {
     IPage<User> getUsers(Page<User> userPage, String search);
 
     User findUserByUsername(String username);
+
+    void importUsers(List<User> users);
 }

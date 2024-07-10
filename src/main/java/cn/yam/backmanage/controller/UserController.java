@@ -1,16 +1,19 @@
 package cn.yam.backmanage.controller;
 
+import cn.yam.backmanage.entity.Response.ImportUsers;
 import cn.yam.backmanage.entity.Response.UserResponse;
 import cn.yam.backmanage.entity.pojo.User;
 import cn.yam.backmanage.service.UserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -122,7 +125,17 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-//    public ResponseEntity<?> getUserInfo()
+    @PostMapping("/users/import")
+    public ResponseEntity<Map<String, Integer>> importUsers(@RequestBody List<User> users) {
+        System.out.println(users);
+        users.remove(users.size() - 1);
+        System.out.println(users);
+        userService.importUsers(users);
+        Map<String, Integer> response = new HashMap<>();
+        response.put("code", 200);
+        return ResponseEntity.ok(response);
+    }
+
 
 
 }
