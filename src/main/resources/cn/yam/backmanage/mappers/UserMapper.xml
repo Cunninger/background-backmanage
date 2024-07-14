@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yam.backmanage.mappers.UserMapper">
+
+
+    <!--    <select id="findUserWithRoleByUsername" resultType="cn.yam.backmanage.entity.pojo.User"-->
+    <!--            parameterType="java.lang.String">-->
+    <!--        select u.*,-->
+    <!--               r.id          as role_id,-->
+    <!--               r.name        as role_name,-->
+    <!--               r.description as role_description,-->
+    <!--               r.available   as role_available-->
+    <!--        from user u-->
+    <!--                 left join sys_role r on u.sys_role_id = r.id-->
+    <!--        where u.username = #{username}-->
+
+
+    <!--    </select>-->
+
+    <resultMap id="UserWithRoleMap" type="cn.yam.backmanage.entity.pojo.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <association property="sysRole" javaType="cn.yam.backmanage.entity.pojo.SysRole">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="name"/>
+            <result column="role_description" property="description"/>
+            <result column="role_available" property="available"/>
+        </association>
+    </resultMap>
+
+    <select id="findUserWithRoleByUsername" resultMap="UserWithRoleMap">
+        SELECT u.*,
+               r.id          AS role_id,
+               r.name        AS role_name,
+               r.description AS role_description,
+               r.available   AS role_available
+        FROM user u
+                 LEFT JOIN sys_role r ON u.sys_role_id = r.id
+        WHERE u.username = #{username}
+    </select>
+
+    <select id="selectPage" resultMap="UserWithRoleMap">
+        SELECT u.*,
+        r.id AS role_id,
+        r.name AS role_name,
+        r.description AS role_description,
+        r.available AS role_available
+        FROM user u
+        LEFT JOIN sys_role r ON u.sys_role_id = r.id
+        <if test="search != null and search != ''">
+            WHERE u.username LIKE CONCAT('%', #{search}, '%')
+        </if>
+    </select>
+</mapper>

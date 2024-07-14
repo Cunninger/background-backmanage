@@ -1,34 +1,34 @@
 package cn.yam.backmanage.entity.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import cn.yam.backmanage.object.AbstractDO;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
- * 功能：
- * 日期：2024/5/24 上午8:30
+ * 日期：2024/5/24 下午6:02
  */
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@TableName("user") // 指定表名，如果表名与类名一致可以省略
-public class User {
-    @TableId // 指定主键
-    private Integer userId = null;
-    private String username;
-    private String password;
-    private String role;
-    private Integer status;
-    private Date createTime;
-    private Date lastLoginTime;
-    private Date updateTime;
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("user")
+public class User extends AbstractDO {
 
+    @TableField(exist = false)
+    private SysRole sysRole;
+    private String username;
+
+    private String password;
+
+    @TableField("last_login_time")
+    private Date lastLoginTime;
+
+    private Boolean status;
 
 }
-
-

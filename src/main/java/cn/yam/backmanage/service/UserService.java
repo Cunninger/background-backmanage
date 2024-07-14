@@ -9,15 +9,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.List;
 
 public interface UserService {
+
     void login(String username, String password);
 //
     void register(String username, String password);
 //
 //    UserResponse findUsers(String search, int page, int pageSize);
 //
-    void deleteUser(Integer userId);
+    void deleteUser(Long userId);
 //
-    void updateUser(Integer userId, User user);
+    void updateUser(Long userId, User user);
 //
     void createUser(User user);
 
@@ -26,4 +27,6 @@ public interface UserService {
     User findUserByUsername(String username);
 
     void importUsers(List<User> users);
+
+    User findUserWithRoleByUsername(String username);
 }

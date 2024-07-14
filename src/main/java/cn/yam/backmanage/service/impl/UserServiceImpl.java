@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
      */
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         User user = userMapper.selectById(userId);
         if (user == null) {
             throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
@@ -88,11 +88,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public IPage<User> getUsers(Page<User> userPage, String search) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if (search != null && !search.isEmpty()) {
-            queryWrapper.lambda().like(User::getUsername, search);
-        }
-        return userMapper.selectPage(userPage, queryWrapper);
+
+        return userMapper.selectPage(userPage, search);
     }
 
     /**
@@ -116,6 +113,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    @Override
+    public User findUserWithRoleByUsername(String username) {
+        return userMapper.findUserWithRoleByUsername(username);
+    }
+
     /**
      * 更新用户信息
      *
@@ -123,14 +126,14 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
-    public void updateUser(Integer userId, User user) {
+    public void updateUser(Long userId, User user) {
         User userTemp = userMapper.selectById(userId);
         if (userTemp == null) {
             throw new UserException(ResponseCodeEnum.USER_NOT_FOUND.getCode(), ResponseCodeEnum.USER_NOT_FOUND.getMessage());
         }
         userTemp.setUsername(user.getUsername());
         userTemp.setPassword(user.getPassword());
-        userTemp.setRole(user.getRole());
+        userTemp.setSysRole(user.getSysRole());
         userTemp.setStatus(user.getStatus());
         userMapper.updateById(userTemp);
     }
@@ -143,9 +146,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
-        User userTemp = userMapper.selectById(user.getUserId());
+        User userTemp = userMapper.selectById(user.getId());
         if (userTemp != null) {
-            updateUser(userTemp.getUserId(), userTemp);
+            updateUser(userTemp.getId(), userTemp);
         } else {
 
             userMapper.insert(user);

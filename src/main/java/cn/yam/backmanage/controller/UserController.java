@@ -48,11 +48,11 @@ public class UserController {
 
         userService.login(username, password);
         System.out.println(ResponseEntity.ok(response));
-        User userTemp = userService.findUserByUsername(username);
+        User userTemp = userService.findUserWithRoleByUsername(username);
+        System.out.println(userTemp);
         response.put("user", userTemp);
         System.out.println(ResponseEntity.ok(response));
         return ResponseEntity.ok(response);
-
     }
 
 
@@ -90,7 +90,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<Map<String, Integer>> deleteUser(@PathVariable int userId) {
+    public ResponseEntity<Map<String, Integer>> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         Map<String, Integer> response = new HashMap<>();
         response.put("code", 200);
@@ -104,7 +104,7 @@ public class UserController {
      * @return
      */
     @PutMapping("/users/{userId}")
-    public ResponseEntity<Map<String, Integer>> updateUser(@PathVariable Integer userId, @RequestBody User user) {
+    public ResponseEntity<Map<String, Integer>> updateUser(@PathVariable Long userId, @RequestBody User user) {
         userService.updateUser(userId, user);
         Map<String, Integer> response = new HashMap<>();
         response.put("code", 200);
@@ -125,6 +125,12 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 导入用户
+     *
+     * @param users
+     * @return
+     */
     @PostMapping("/users/import")
     public ResponseEntity<Map<String, Integer>> importUsers(@RequestBody List<User> users) {
         System.out.println(users);
@@ -135,7 +141,6 @@ public class UserController {
         response.put("code", 200);
         return ResponseEntity.ok(response);
     }
-
 
 
 }
