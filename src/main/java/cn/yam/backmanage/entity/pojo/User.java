@@ -29,6 +29,6 @@ public class User extends AbstractDO {
     @TableField("last_login_time")
     private Date lastLoginTime;
 
-    private Boolean status;
+    private Integer status;
 
 }

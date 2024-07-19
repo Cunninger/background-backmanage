@@ -14,8 +14,6 @@ public interface UserService {
 //
     void register(String username, String password);
 //
-//    UserResponse findUsers(String search, int page, int pageSize);
-//
     void deleteUser(Long userId);
 //
     void updateUser(Long userId, User user);
